@@ -109,6 +109,7 @@ const (
 	defaultRendezvousPercent float32 = 1.0
 )
 
+// 这个是用来干嘛的？
 type Rendezvous struct {
 	Name           string  `json:"name" yaml:"name"`                           // required
 	Percent        float32 `json:"percent,omitempty" yaml:"percent,omitempty"` // default to 1(100%)

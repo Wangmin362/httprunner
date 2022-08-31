@@ -222,6 +222,7 @@
     {{- range $loop_index, $record := .Records }}
     {{- with $record}}
     {{- $status := "error"}}
+    {{- $disableReportBody := .DisableReportBody}}
     {{- if .Success }} {{ $status = "success" }} {{ end }}
     <tr id="record_{{$suite_index}}_{{$loop_index}}">
         <th class={{$status}} style="width:5em;">{{$status}}</th>
@@ -278,6 +279,10 @@
                                         {{- range $k, $v := $value }}
                                         <pre>{{$k}}: {{$v}}</pre>
                                         {{- end -}}
+                                        {{- else if eq $key "body" }}
+                                        {{- if not $disableReportBody }}
+                                        <pre>{{ $value }}</pre>
+                                        {{- end}}
                                         {{- else }}
                                         <pre>{{ $value }}</pre>
                                         {{- end }}

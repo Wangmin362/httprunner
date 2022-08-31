@@ -286,10 +286,11 @@ func prepareUpload(parser *Parser, step *TStep, stepVariables map[string]interfa
 
 func runStepRequest(r *SessionRunner, step *TStep) (stepResult *StepResult, err error) {
 	stepResult = &StepResult{
-		Name:        step.Name,
-		StepType:    stepTypeRequest,
-		Success:     false,
-		ContentSize: 0,
+		Name:              step.Name,
+		StepType:          stepTypeRequest,
+		Success:           false,
+		DisableReportBody: step.DisableReportBody,
+		ContentSize:       0,
 	}
 
 	defer func() {
