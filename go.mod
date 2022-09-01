@@ -3,6 +3,7 @@ module github.com/httprunner/httprunner/v4
 go 1.16
 
 require (
+	gitcdteam.skyguardmis.com/bigdt/gokit v0.0.0-20220831024901-b1955a9e40d4
 	github.com/andybalholm/brotli v1.0.4
 	github.com/denisbrodbeck/machineid v1.0.1
 	github.com/fatih/color v1.13.0
@@ -14,7 +15,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.4.1
 	github.com/httprunner/funplugin v0.5.0
-	github.com/jinzhu/copier v0.3.2
+	github.com/jinzhu/copier v0.3.5
 	github.com/jmespath/go-jmespath v0.4.0
 	github.com/json-iterator/go v1.1.12
 	github.com/maja42/goval v1.2.1
@@ -26,14 +27,14 @@ require (
 	github.com/rs/zerolog v1.26.1
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/spf13/cobra v1.2.1
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.7.1
 	github.com/tklauser/go-sysconf v0.3.10 // indirect
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	golang.org/x/net v0.0.0-20220225172249-27dd8689420f
 	golang.org/x/oauth2 v0.0.0-20210402161424-2e8d93401602
-	google.golang.org/grpc v1.45.0
+	google.golang.org/grpc v1.46.2
 	google.golang.org/protobuf v1.28.0
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
+	gopkg.in/yaml.v3 v3.0.0
 )
 
 // replace github.com/httprunner/funplugin => ../funplugin
