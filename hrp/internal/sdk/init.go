@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/rs/zerolog/log"
 
-	"github.com/httprunner/httprunner/v4/hrp/internal/version"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/version"
 )
 
 const (

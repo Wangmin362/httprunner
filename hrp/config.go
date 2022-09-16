@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/builtin"
 )
 
 // NewConfig returns a new constructed testcase config with specified testcase name.

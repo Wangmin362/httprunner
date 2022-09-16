@@ -9,11 +9,11 @@ import (
 	"sync"
 	"time"
 
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/boomer"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/builtin"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/json"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/sdk"
 	"github.com/httprunner/funplugin"
-	"github.com/httprunner/httprunner/v4/hrp/internal/boomer"
-	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
-	"github.com/httprunner/httprunner/v4/hrp/internal/json"
-	"github.com/httprunner/httprunner/v4/hrp/internal/sdk"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/net/context"
 )
@@ -251,7 +251,6 @@ func (b *HRPBoomer) rebalanceRunner(profile *boomer.Profile) {
 	b.GetRebalanceChan() <- true
 	log.Info().Interface("profile", profile).Msg("rebalance tasks successfully")
 }
-
 
 func (b *HRPBoomer) PollTasks(ctx context.Context) {
 	for {

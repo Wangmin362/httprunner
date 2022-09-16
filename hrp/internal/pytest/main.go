@@ -1,8 +1,8 @@
 package pytest
 
 import (
-	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
-	"github.com/httprunner/httprunner/v4/hrp/internal/sdk"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/builtin"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/sdk"
 )
 
 func RunPytest(args []string) error {

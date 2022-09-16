@@ -20,7 +20,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"gopkg.in/yaml.v3"
 
-	"github.com/httprunner/httprunner/v4/hrp/internal/json"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/json"
 )
 
 func Dump2JSON(data interface{}, path string) error {

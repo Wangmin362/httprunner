@@ -15,7 +15,7 @@ import (
 	"github.com/maja42/goval"
 	"github.com/rs/zerolog/log"
 
-	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/builtin"
 )
 
 func newParser() *Parser {

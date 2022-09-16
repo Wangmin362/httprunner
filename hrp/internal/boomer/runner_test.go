@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/httprunner/httprunner/v4/hrp/internal/boomer/grpc/messager"
-	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/boomer/grpc/messager"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/builtin"
 	"github.com/stretchr/testify/assert"
 )
 

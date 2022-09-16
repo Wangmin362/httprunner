@@ -7,7 +7,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 
-	"github.com/httprunner/httprunner/v4/hrp/internal/scaffold"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/scaffold"
 )
 
 var scaffoldCmd = &cobra.Command{

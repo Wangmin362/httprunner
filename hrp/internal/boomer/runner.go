@@ -10,9 +10,9 @@ import (
 	"sync/atomic"
 	"time"
 
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/boomer/grpc/messager"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/builtin"
 	"github.com/go-errors/errors"
-	"github.com/httprunner/httprunner/v4/hrp/internal/boomer/grpc/messager"
-	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
 	"github.com/jinzhu/copier"
 	"github.com/olekukonko/tablewriter"
 	"github.com/rs/zerolog/log"

@@ -3,8 +3,8 @@ package convert
 import (
 	"github.com/pkg/errors"
 
-	"github.com/httprunner/httprunner/v4/hrp"
-	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/builtin"
 )
 
 func LoadJSONCase(path string) (*hrp.TCase, error) {

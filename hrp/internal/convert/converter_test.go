@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/httprunner/httprunner/v4/hrp"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp"
 )
 
 const (

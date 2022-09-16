@@ -5,7 +5,7 @@ import (
 
 	"github.com/getsentry/sentry-go"
 
-	"github.com/httprunner/httprunner/v4/hrp/cmd"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/cmd"
 )
 
 func main() {

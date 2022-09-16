@@ -5,7 +5,7 @@ import (
 
 	"github.com/rs/zerolog/log"
 
-	"github.com/httprunner/httprunner/v4/hrp/internal/sdk"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/sdk"
 )
 
 func OpenWiki() error {

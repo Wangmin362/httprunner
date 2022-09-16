@@ -17,8 +17,8 @@ import (
 	"google.golang.org/grpc/reflection"
 	"google.golang.org/grpc/status"
 
-	"github.com/httprunner/httprunner/v4/hrp/internal/boomer/data"
-	"github.com/httprunner/httprunner/v4/hrp/internal/boomer/grpc/messager"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/boomer/data"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/boomer/grpc/messager"
 	"github.com/rs/zerolog/log"
 )
 

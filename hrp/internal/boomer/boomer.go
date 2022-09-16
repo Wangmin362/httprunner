@@ -1,7 +1,7 @@
 package boomer
 
 import (
-	"github.com/httprunner/httprunner/v4/hrp/internal/json"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/json"
 	"golang.org/x/net/context"
 	"math"
 	"os"

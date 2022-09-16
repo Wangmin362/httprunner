@@ -1,4 +1,4 @@
-module github.com/httprunner/httprunner/v4
+module gitcdteam.skyguardmis.com/gatorcloud/httprunner
 
 go 1.16
 

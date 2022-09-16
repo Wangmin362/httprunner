@@ -15,8 +15,8 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
 
-	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
-	"github.com/httprunner/httprunner/v4/hrp/internal/version"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/builtin"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/version"
 )
 
 //go:embed internal/scaffold/templates/plugin/debugtalkPythonTemplate

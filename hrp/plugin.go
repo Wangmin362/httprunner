@@ -7,10 +7,10 @@ import (
 	"strings"
 	"sync"
 
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/builtin"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/sdk"
 	"github.com/httprunner/funplugin"
 	"github.com/httprunner/funplugin/fungo"
-	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
-	"github.com/httprunner/httprunner/v4/hrp/internal/sdk"
 	"github.com/rs/zerolog/log"
 )
 

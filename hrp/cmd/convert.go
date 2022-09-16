@@ -7,9 +7,9 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 
-	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
-	"github.com/httprunner/httprunner/v4/hrp/internal/convert"
-	"github.com/httprunner/httprunner/v4/hrp/internal/version"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/builtin"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/convert"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/version"
 )
 
 var convertCmd = &cobra.Command{

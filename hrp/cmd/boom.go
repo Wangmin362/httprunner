@@ -9,9 +9,9 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"
 
-	"github.com/httprunner/httprunner/v4/hrp"
-	"github.com/httprunner/httprunner/v4/hrp/internal/boomer"
-	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/boomer"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/builtin"
 )
 
 // boomCmd represents the boom command

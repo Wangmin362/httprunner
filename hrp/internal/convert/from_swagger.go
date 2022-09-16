@@ -4,8 +4,8 @@ import (
 	"github.com/go-openapi/spec"
 	"github.com/pkg/errors"
 
-	"github.com/httprunner/httprunner/v4/hrp"
-	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/builtin"
 )
 
 func LoadSwaggerCase(path string) (*hrp.TCase, error) {

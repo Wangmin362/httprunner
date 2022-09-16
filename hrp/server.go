@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/httprunner/httprunner/v4/hrp/internal/boomer"
-	"github.com/httprunner/httprunner/v4/hrp/internal/json"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/boomer"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/json"
 	"github.com/mitchellh/mapstructure"
 )
 

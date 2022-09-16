@@ -12,10 +12,10 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
 
-	"github.com/httprunner/httprunner/v4/hrp"
-	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
-	"github.com/httprunner/httprunner/v4/hrp/internal/sdk"
-	"github.com/httprunner/httprunner/v4/hrp/internal/version"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/builtin"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/sdk"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/version"
 )
 
 type PluginType string

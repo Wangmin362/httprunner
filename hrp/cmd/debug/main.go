@@ -2,7 +2,7 @@ package main
 
 import (
 	"gitcdteam.skyguardmis.com/bigdt/gokit/pkg/pathx"
-	"github.com/httprunner/httprunner/v4/hrp"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp"
 	"net/http"
 	"os"
 	"path/filepath"

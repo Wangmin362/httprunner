@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/httprunner/httprunner/v4/hrp/internal/version"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/version"
 )
 
 type IEvent interface {

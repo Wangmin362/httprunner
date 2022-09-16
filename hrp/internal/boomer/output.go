@@ -16,7 +16,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/push"
 	"github.com/rs/zerolog/log"
 
-	"github.com/httprunner/httprunner/v4/hrp/internal/json"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp/internal/json"
 )
 
 // Output is primarily responsible for printing test results to different destinations

@@ -3,7 +3,7 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/httprunner/httprunner/v4/hrp"
+	"gitcdteam.skyguardmis.com/gatorcloud/httprunner/hrp"
 )
 
 var buildCmd = &cobra.Command{
