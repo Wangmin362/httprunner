@@ -17,7 +17,6 @@ import (
 	"github.com/rs/zerolog/log"
 	"golang.org/x/net/http2"
 
-	"github.com/httprunner/funplugin"
 	"github.com/httprunner/httprunner/v4/hrp/internal/builtin"
 	"github.com/httprunner/httprunner/v4/hrp/internal/sdk"
 )
@@ -188,14 +187,14 @@ func (r *HRPRunner) Run(testcases ...ITestCase) error {
 	}
 
 	// quit all plugins
-	defer func() {
-		pluginMap.Range(func(key, value interface{}) bool {
-			if plugin, ok := value.(funplugin.IPlugin); ok {
-				plugin.Quit()
-			}
-			return true
-		})
-	}()
+	//defer func() {
+	//	pluginMap.Range(func(key, value interface{}) bool {
+	//		if plugin, ok := value.(funplugin.IPlugin); ok {
+	//			plugin.Quit()
+	//		}
+	//		return true
+	//	})
+	//}()
 
 	var runErr error
 	// run testcase one by one
