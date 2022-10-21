@@ -9,6 +9,11 @@ func main() {
 	fungo.Register("GetCurrentTimestamp", GetCurrentTimestamp)
 	fungo.Register("GetAuth", GetAuth)
 	fungo.Register("GetPopAuth", GetPopAuth)
-	fungo.Register("GetTenantId", GetTenantId)
+	fungo.Register("GetUcwiAuth", GetUcwiAuth)
+	fungo.Register("GetUUID", GetUUID)
+	fungo.Register("GetUcwiDlpChannelMetadata", GetUcwiDlpChannelMetadata)
+	fungo.Register("GetRandomFile", GetRandomFile)
+	fungo.Register("GetRandomData", GetRandomData)
+	fungo.Register("RandInt", RandInt)
 	fungo.Serve()
 }

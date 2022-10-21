@@ -300,6 +300,17 @@ func (r *HRPRunner) newCaseRunner(testcase *TestCase) (*testCaseRunner, error) {
 		}
 	}
 
+	// parse testcase config parameters
+	parametersIterator, err := initParametersIteratorWithParse(runner.parsedConfig, runner.parser)
+	if err != nil {
+		log.Error().Err(err).
+			Interface("parameters", runner.parsedConfig.Parameters).
+			Interface("parametersSetting", runner.parsedConfig.ParametersSetting).
+			Msg("parse config parameters failed")
+		return runner, errors.Wrap(err, "parse testcase config parameters failed")
+	}
+	runner.parametersIterator = parametersIterator
+
 	return runner, nil
 }
 
@@ -369,17 +380,6 @@ func (r *testCaseRunner) parseConfig() error {
 
 	// ensure correction of websocket config
 	r.parsedConfig.WebSocketSetting.checkWebSocket()
-
-	// parse testcase config parameters
-	parametersIterator, err := initParametersIterator(r.parsedConfig)
-	if err != nil {
-		log.Error().Err(err).
-			Interface("parameters", r.parsedConfig.Parameters).
-			Interface("parametersSetting", r.parsedConfig.ParametersSetting).
-			Msg("parse config parameters failed")
-		return errors.Wrap(err, "parse testcase config parameters failed")
-	}
-	r.parametersIterator = parametersIterator
 
 	return nil
 }

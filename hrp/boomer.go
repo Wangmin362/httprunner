@@ -116,7 +116,7 @@ func (b *HRPBoomer) Run(testcases ...ITestCase) {
 }
 
 func (b *HRPBoomer) ConvertTestCasesToBoomerTasks(testcases ...ITestCase) (taskSlice []*boomer.Task) {
-	// load all testcases
+	// load all testcases 加载测试用例
 	testCases, err := LoadTestCases(testcases...)
 	if err != nil {
 		log.Error().Err(err).Msg("failed to load testcases")
@@ -251,7 +251,6 @@ func (b *HRPBoomer) rebalanceRunner(profile *boomer.Profile) {
 	b.GetRebalanceChan() <- true
 	log.Info().Interface("profile", profile).Msg("rebalance tasks successfully")
 }
-
 
 func (b *HRPBoomer) PollTasks(ctx context.Context) {
 	for {

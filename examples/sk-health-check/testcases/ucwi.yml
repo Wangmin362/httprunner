@@ -1,0 +1,37 @@
+config:
+  verify: False
+  parameters:
+#    upload_file: ["examples/sk-health-check/testdata/file1.txt", "examples/sk-health-check/testdata/file2.txt", "examples/sk-health-check/testdata/file3.txt"]
+    upload_file: ${GetRandomFile()}
+  variables:
+    base_url: http://${ENV(endpoint)}
+    num: "10"
+    length: "10"
+    xTenantId: ${ENV(tenantId)}
+    xTimestamp: ${GetCurrentTimestamp()}
+    accessKey: b3564f32-2bdc-4f4b-9577-709f58705a81
+    secretKey: e0a69f7c-b878-43d9-812e-58a9488d5e18
+    appId: 66bdb2f9-e885-4111-bc9e-1eeea1cee80a
+    authorization: ${GetUcwiAuth($accessKey, $secretKey, $xTimestamp)}
+    uuid: ${GetUUID()}
+  headers:
+    x-tenant-id: ${xTenantId}
+    x-skg-timestamp: ${xTimestamp}
+    Authorization: ${authorization}
+
+teststeps:
+- name: "[ucwi-api] request /skg/v1/dlp/channel/cloudapp"
+  variables:
+    dlpChannelCloudAppUrl: $base_url/skg/v1/dlp/channel/cloudapp/$appId/sync
+    m_encoder: ${multipart_encoder($m_upload)}
+    m_upload:
+      request: "@$upload_file"
+      metadata: ${GetUcwiDlpChannelMetadata($uuid)}
+  request:
+    url: $dlpChannelCloudAppUrl
+    method: POST
+    headers:
+      Content-Type: ${multipart_content_type($m_encoder)}
+    body: $m_encoder
+  validate:
+    - eq: ["status_code", 200]
