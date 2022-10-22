@@ -109,7 +109,7 @@ const (
 	defaultRendezvousPercent float32 = 1.0
 )
 
-// 这个是用来干嘛的？
+// Rendezvous 集合点,用于保证当前测试用例可以模仿秒杀场景, 即httprunner会模拟指定的spawnCount数量的用户在同一时间请求该测试用例
 type Rendezvous struct {
 	Name           string  `json:"name" yaml:"name"`                           // required
 	Percent        float32 `json:"percent,omitempty" yaml:"percent,omitempty"` // default to 1(100%)

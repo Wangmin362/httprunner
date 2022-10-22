@@ -27,7 +27,7 @@ func Run(testcases ...ITestCase) error {
 	return NewRunner(t).SetRequestsLogOn().Run(testcases...)
 }
 
-// NewRunner constructs a new runner instance.
+// NewRunner constructs a new runner instance. 这玩意就是功能测试中使用的runner,实际上最终就是为了把testcase中的yaml文件转换为http请求
 func NewRunner(t *testing.T) *HRPRunner {
 	if t == nil {
 		t = &testing.T{}

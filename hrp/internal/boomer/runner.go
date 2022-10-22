@@ -19,13 +19,13 @@ import (
 )
 
 const (
-	StateInit     = iota + 1 // initializing
-	StateSpawning            // spawning
-	StateRunning             // running
-	StateStopping            // stopping
-	StateStopped             // stopped
-	StateQuitting            // quitting
-	StateMissing             // missing
+	StateInit     = iota + 1 // initializing 初始化状态
+	StateSpawning            // spawning 悬挂
+	StateRunning             // running 运行中
+	StateStopping            // stopping 停止中
+	StateStopped             // stopped 已经停止
+	StateQuitting            // quitting 退出
+	StateMissing             // missing 这个状态应该一般不会到达
 )
 
 func getStateName(state int32) (stateName string) {
@@ -629,6 +629,7 @@ type localRunner struct {
 }
 
 func newLocalRunner(spawnCount int64, spawnRate float64) *localRunner {
+	// 创建一个局部的Runner，即只需要在一台机器上跑压力测试
 	return &localRunner{
 		runner: runner{
 			state:      StateInit,

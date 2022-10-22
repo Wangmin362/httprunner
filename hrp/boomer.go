@@ -18,12 +18,15 @@ import (
 	"golang.org/x/net/context"
 )
 
+// NewStandaloneBoomer 创建单例boomer，用于本地压力测试，即只用一台机器进行压力测试
 func NewStandaloneBoomer(spawnCount int64, spawnRate float64) *HRPBoomer {
 	b := &HRPBoomer{
-		Boomer:       boomer.NewStandaloneBoomer(spawnCount, spawnRate),
+		Boomer: boomer.NewStandaloneBoomer(spawnCount, spawnRate),
+		// 插件的互斥锁，可以看到这里是要给读写互斥锁
 		pluginsMutex: new(sync.RWMutex),
 	}
 
+	// 普通的runner, 最终目的是为了把yaml文件中的一个个case转换为http请求
 	b.hrpRunner = NewRunner(nil)
 	return b
 }
@@ -104,19 +107,22 @@ func (b *HRPBoomer) Run(testcases ...ITestCase) {
 	defer func() {
 		pluginMap.Range(func(key, value interface{}) bool {
 			if plugin, ok := value.(funplugin.IPlugin); ok {
+				// deactive all plugin
 				plugin.Quit()
 			}
 			return true
 		})
 	}()
 
+	// 把用户传递的yaml中的testcase转换为压力测试任务
 	taskSlice := b.ConvertTestCasesToBoomerTasks(testcases...)
 
+	// 运行压力测试任务
 	b.Boomer.Run(taskSlice...)
 }
 
 func (b *HRPBoomer) ConvertTestCasesToBoomerTasks(testcases ...ITestCase) (taskSlice []*boomer.Task) {
-	// load all testcases 加载测试用例
+	// load all testcases 加载测试用例 一个yaml就是一个testCase
 	testCases, err := LoadTestCases(testcases...)
 	if err != nil {
 		log.Error().Err(err).Msg("failed to load testcases")
@@ -124,7 +130,10 @@ func (b *HRPBoomer) ConvertTestCasesToBoomerTasks(testcases ...ITestCase) (taskS
 	}
 
 	for _, testcase := range testCases {
+		// 初始化集合点, 理解了集合点的含义,实际上这里就能理解为啥要传递SpawnCount,因为httprunner把这个参数当作指定的虚拟用户的数量,即
+		// httprunner会在某个时刻并发的发出SpawnCount个请求
 		rendezvousList := initRendezvous(testcase, int64(b.GetSpawnCount()))
+		// 转换为并发测试要运行的任务
 		task := b.convertBoomerTask(testcase, rendezvousList)
 		taskSlice = append(taskSlice, task)
 		waitRendezvous(rendezvousList, b)
@@ -314,6 +323,7 @@ func (b *HRPBoomer) PollTestCases(ctx context.Context) {
 func (b *HRPBoomer) convertBoomerTask(testcase *TestCase, rendezvousList []*Rendezvous) *boomer.Task {
 	// init runner for testcase
 	// this runner is shared by multiple session runners
+	// 这里主要是为了能够解析yaml中的case
 	caseRunner, err := b.hrpRunner.newCaseRunner(testcase)
 	if err != nil {
 		log.Error().Err(err).Msg("failed to create runner")

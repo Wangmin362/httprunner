@@ -42,6 +42,7 @@ type requestStats struct {
 	requestFailureChan chan *requestFailure
 }
 
+// 统计请求的状态,譬如事务数量,请求成功的数量,请求失败的数量
 func newRequestStats() (stats *requestStats) {
 	entries := make(map[string]*statsEntry)
 	errors := make(map[string]*statsError)
