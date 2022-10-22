@@ -49,8 +49,8 @@ type StableRateLimiter struct {
 func NewStableRateLimiter(threshold int64, refillPeriod time.Duration) (rateLimiter *StableRateLimiter) {
 	rateLimiter = &StableRateLimiter{
 		threshold:        threshold,
-		currentThreshold: threshold,
-		refillPeriod:     refillPeriod,
+		currentThreshold: threshold,    // 有点像令牌桶的感觉
+		refillPeriod:     refillPeriod, // 每秒钟重置一下限速器
 		broadcastChanMux: new(sync.RWMutex),
 		broadcastChannel: make(chan bool),
 	}

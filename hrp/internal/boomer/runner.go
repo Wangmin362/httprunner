@@ -81,14 +81,14 @@ func (l *Loop) increaseFinishedCount() {
 }
 
 type Controller struct {
-	mutex             sync.RWMutex
-	once              sync.Once
-	currentClientsNum int64 // current clients count
-	spawnCount        int64 // target clients to spawn
-	spawnRate         float64
-	rebalance         chan bool // dynamically balance boomer running parameters
+	mutex             sync.RWMutex // 互斥锁，用户并发修改Controller的元数据，譬如spawnRate, spawnCount, spawnDone等等
+	once              sync.Once    // 用于包装Controller只需要被执行一次的行为
+	currentClientsNum int64        // current clients count 即当前已经启动的虚拟用户，实际上在httprunner中，就是一个携程
+	spawnCount        int64        // target clients to spawn 设置当前压力测试的总的用户数量
+	spawnRate         float64      // 设置虚拟用户增长的速度，不可能一上来就给系统所有的用户，这个值可以模拟用户增加的快慢
+	rebalance         chan bool    // dynamically balance boomer running parameters todo 暂时不清楚这个字段是用来干嘛的
 	spawnDone         chan struct{}
-	tasks             []*Task
+	tasks             []*Task // 用于包装要执行的任务，实际上一个任务就是一个yaml，任务的执行就是吧yaml中的case一个个翻译为request，然后发送出去
 }
 
 func (c *Controller) setSpawn(spawnCount int64, spawnRate float64) {
@@ -144,6 +144,7 @@ func (c *Controller) spawnCompete() {
 	close(c.spawnDone)
 }
 
+// 感觉这个名字起的不咋地，方法名不应该告诉调用者具体的实现
 func (c *Controller) getRebalanceChan() chan bool {
 	c.mutex.RLock()
 	defer c.mutex.RUnlock()
@@ -155,6 +156,8 @@ func (c *Controller) isFinished() bool {
 	return atomic.LoadInt64(&c.currentClientsNum) == atomic.LoadInt64(&c.spawnCount)
 }
 
+// 这个名字起的也不咋滴，虽然这是私有方法。但是对于阅读代码的人来说，并不能做到见名知意，必须要查看其源代码
+// 实际上这个方法就是在判断当前的Controller已经在运行的用户数量是否已经达到了用户期望的数量
 func (c *Controller) acquire() bool {
 	// get one ticket when there are still remaining spawn count to test
 	// return true when getting ticket successfully
@@ -165,6 +168,7 @@ func (c *Controller) acquire() bool {
 	return false
 }
 
+// 去掉一个用户，即停止一个运行中的协程
 func (c *Controller) erase() bool {
 	// return true if acquiredCount > spawnCount
 	if atomic.LoadInt64(&c.currentClientsNum) > atomic.LoadInt64(&c.spawnCount) {
@@ -413,8 +417,11 @@ func (r *runner) spawnWorkers(spawnCount int64, spawnRate float64, quit chan boo
 			log.Info().Msg("Quitting spawning workers")
 			return
 		default:
+			// 实际上这里的acquire就是在控制并发量，即当启动的线程没有达到spawnCount的时候，就还可以增加新的线程
 			if r.isStarting() && r.controller.acquire() {
 				// spawn workers with rate limit
+				// 显然，SpawnRate越大，启动线程的速度也就越快，即相当于模拟的用户数量增长的越快
+				// spawnRate=100，表示每10ms增加一个用户，spawnRate=1000表示每1ms增加一个用户，spawnRate=10000表示每100us增加一个用户
 				sleepTime := time.Duration(1000000/r.controller.getSpawnRate()) * time.Microsecond
 				time.Sleep(sleepTime)
 				// loop count per worker
@@ -426,6 +433,7 @@ func (r *runner) spawnWorkers(spawnCount int64, spawnRate float64, quit chan boo
 					for {
 						select {
 						case <-quit:
+							// 用户下线
 							r.controller.increaseFinishedCount()
 							return
 						default:
@@ -434,6 +442,8 @@ func (r *runner) spawnWorkers(spawnCount int64, spawnRate float64, quit chan boo
 								return
 							}
 							if r.rateLimitEnabled {
+								// 限制每秒钟的用户数量，testcase的执行是一个串行的过程，内部并不会启动多个协程同时请求，因此这里只要限制住了同时
+								// 运行的用户数量，就相当于限制住了每秒钟的请求数量
 								blocked := r.rateLimiter.Acquire()
 								if !blocked {
 									task := r.getTask()
@@ -454,6 +464,7 @@ func (r *runner) spawnWorkers(spawnCount int64, spawnRate float64, quit chan boo
 									return
 								}
 							}
+							// 如果启动的用户数量超出了用户期望的数量，那么当前携程直接退出
 							if r.controller.erase() {
 								return
 							}
@@ -465,7 +476,7 @@ func (r *runner) spawnWorkers(spawnCount int64, spawnRate float64, quit chan boo
 
 			r.controller.once.Do(
 				func() {
-					// spawning compete
+					// spawning compete todo 如何理解这里的spawning?
 					r.controller.spawnCompete()
 					if spawnCompleteFunc != nil {
 						spawnCompleteFunc()
@@ -474,8 +485,10 @@ func (r *runner) spawnWorkers(spawnCount int64, spawnRate float64, quit chan boo
 				},
 			)
 
+			// todo 这里实在干嘛？ rebalance是一个没有缓冲的通道，因此必须有一个协程往里面放东西，这里才不会阻塞
 			<-r.controller.getRebalanceChan()
 			if r.isStarting() {
+				// todo 思考，这里为什么需要重新设置spawnCount以及SpawnRate? 难道controller在运行的过程中会又携程更改这两个值？
 				// rebalance spawn count
 				r.controller.setSpawn(r.getSpawnCount(), r.getSpawnRate())
 			}
@@ -653,6 +666,7 @@ func (r *localRunner) start() {
 
 	// start rate limiter
 	if r.rateLimitEnabled {
+		// 启动限速器
 		r.rateLimiter.Start()
 	}
 	// output setup
@@ -660,6 +674,7 @@ func (r *localRunner) start() {
 
 	go r.runTimeCheck(r.getRunTime())
 
+	// 性能测试的核心代码就是这里了
 	go r.spawnWorkers(r.getSpawnCount(), r.getSpawnRate(), r.stoppingChan, nil)
 
 	defer func() {

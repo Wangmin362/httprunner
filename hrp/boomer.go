@@ -133,7 +133,7 @@ func (b *HRPBoomer) ConvertTestCasesToBoomerTasks(testcases ...ITestCase) (taskS
 		// 初始化集合点, 理解了集合点的含义,实际上这里就能理解为啥要传递SpawnCount,因为httprunner把这个参数当作指定的虚拟用户的数量,即
 		// httprunner会在某个时刻并发的发出SpawnCount个请求
 		rendezvousList := initRendezvous(testcase, int64(b.GetSpawnCount()))
-		// 转换为并发测试要运行的任务
+		// 转换为并发测试要运行的任务，一个task中包含了一个yaml中的所有要测试的接口
 		task := b.convertBoomerTask(testcase, rendezvousList)
 		taskSlice = append(taskSlice, task)
 		waitRendezvous(rendezvousList, b)
@@ -365,12 +365,14 @@ func (b *HRPBoomer) convertBoomerTask(testcase *TestCase, rendezvousList []*Rend
 
 			mutex.Lock()
 			if parametersIterator.HasNext() {
+				// 更新变量
 				sessionRunner.updateSessionVariables(parametersIterator.Next())
 			}
 			mutex.Unlock()
 
 			startTime := time.Now()
 			for _, step := range testcase.TestSteps {
+				// 运行一个个的测试用例
 				// parse step name
 				parsedName, err := sessionRunner.parser.ParseString(step.Name(), sessionRunner.sessionVariables)
 				if err != nil {
